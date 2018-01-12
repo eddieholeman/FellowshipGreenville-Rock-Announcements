@@ -3,24 +3,32 @@
   {% comment %}
     <img src="/Themes/NewCovenant_v1/Assets/Images/icon_calendar.png" />
   {% endcomment %}
-    <h4>{{ ListTitle }}</h4>
+
+  <h4>{{ ListTitle }}</h4>
   </header>
 
-  <ul class="list-unstyled">
+
     {% for occurrence in EventItemOccurrences %}
-    <li>
-      {% if occurrence.EventItem.DetailsUrl != '' %}
+  <div class="panel panel-default margin-t-md">
+    <div class="panel-heading clearfix">
+      <h2 class="panel-title pull-left">
+
+ {{ occurrence.EventItem.Name }} </h2>
+       <div class="pull-right">
+	<div class="events-when">
+          {{ occurrence.Schedule.iCalendarContent | DatesFromICal | First | Date: 'MMM d, h:mm tt'  }}</div> 
+
+         <div class="events-where">{{ occurrence.Location }}</div> | 
+		       {% if occurrence.EventItem.DetailsUrl != '' %}
       <a href="{{ occurrence.EventItem.DetailsUrl }}">
         {% else %}
         <a href="{{ EventDetailPage }}?EventOccurrenceId={{ occurrence.Id }}">
           {% endif %}
- <div class="events-what">{{ occurrence.EventItem.Name }}</div> <div class="events-separator">|</div>
-	<div class="events-when">
-          {{ occurrence.Schedule.iCalendarContent | DatesFromICal | First | Date: 'M/d, hh:mm tt'  }}</div> 
-
-        </a>  <div class="events-separator">|</div> <div class="events-where">{{ occurrence.Location }}</div>
-
-      </li>
+		  <i>View More <i class="fa fa-chevron-right"></i></a>
+	</div>
+	</div>
+	</div>
     {% endfor %}
-  </ul>
+
+
 </div>
